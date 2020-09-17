@@ -1,3 +1,8 @@
-# Plantilla del curso programación para QA
+# World of Diceness
 
-Plantilla para el [curso de desarrollo para QA](https://jj.github.io/curso-tdd)
+Chat room to easily roll dice in World of Darkness games, focused on usability.
+
+## Author
+
+Mu (https://github.com/muetsii/)
+
