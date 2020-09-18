@@ -49,3 +49,26 @@ Para un futuro, sí me gustaría guardar ese historial de chats, para poder usar
 No parece que vaya a necesitar un gestor de colas como RabbitMQ.
 
 La elección de un servidor web dependerá de la tecnología finalmente seleccionada para la implementación, aunque tampoco será determinante por el momento.
+
+
+## Archivos generados: Actividad 4
+
+Los siguientes archivos son generados por el scaffolding
+
+$ feathers generate app
+
+Entiendo que califican como lo que pide la actividad.
+
+En Node.js no hay ningún layout demasiado estándar, pero en feathers sí, y es éste (de hecho, es lo que me han creado). Me parece un buen layout, aunque no parece muy adecuado para modelo de datos orientado a objetos.
+
+src
+src/index.js
+src/channels.js
+src/logger.js
+src/services
+src/services/index.js
+src/middleware
+src/middleware/index.js
+src/app.js
+src/app.hooks.js
+
