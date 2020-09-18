@@ -1,0 +1,8 @@
+{
+    "lenguaje" : "Node.js",
+    "build" : "package.json",
+    "ficheros" : [
+	"src/index.js",
+	"src/services/index.js",
+    ]
+}
