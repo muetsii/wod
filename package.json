@@ -24,10 +24,11 @@
     "npm": ">= 3.0.0"
   },
   "scripts": {
-    "build": "npm install && npm run check"
+    "build": "npm install && npm run check",
     "check": "npm run lint && npm run test",
     "test": "npm run mocha",
-    "lint": "eslint src/. test/. --config .eslintrc.json --fix",
+    "lint": "eslint src/. test/. --config .eslintrc.json",
+    "lintfix": "eslint src/. test/. --config .eslintrc.json --fix",
     "dev": "nodemon src/",
     "start": "node src/",
     "mocha": "mocha test/ --recursive --exit"
