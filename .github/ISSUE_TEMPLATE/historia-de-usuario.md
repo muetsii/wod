@@ -1,8 +1,8 @@
 ---
 name: Historia de usuario
-about: Descripción de los desarrollos estilo ágil
+about: Descripción de los desarrollos estilo Ágil
 title: "hu-0-0 "
-labels: enhancement
+labels: user-story
 assignees: ''
 
 ---
