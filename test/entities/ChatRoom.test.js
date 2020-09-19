@@ -28,5 +28,28 @@ describe('ChatRoom', () => {
             expect(chat.messages[1].id).to.equal(1);
         });
     });
+
+    describe('getMessages', () => {
+        // weird test, internal joke
+        it('gets messages after lastId', () => {
+            // Arrange
+            const player = new Player('Enrico');
+            const chat = new ChatRoom('Comillos en la Noche');
+            chat.addPlayer(player);
+            const messageWords = 'you and I will be great friends and that is an order';
+            const messages = messageWords.split(' ');
+            for (let m of messages) {
+                chat.addMessage(player, m);
+            }
+            const lastId = messages.findIndex(m => m == 'that');
+
+            // Act
+            const chatMsgs = chat.getMessages(lastId);
+
+            // Assert
+            const greatSentence = chatMsgs.map(m => m.message).join(' ');
+            expect(greatSentence).to.equal('that is an order');
+        });
+    });
 });
 
