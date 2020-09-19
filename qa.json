@@ -2,6 +2,10 @@
     "lenguaje" : "Node.js",
     "build" : "package.json",
     "ficheros" : [
+        "src/entities/ChatRoom.js",
+        "src/entities/ChatMessage.js",
+        "src/entities/Player.js",
+        "src/entities/PlayerAvatar.js",
 	"src/index.js",
 	"src/services/index.js",
     ]
