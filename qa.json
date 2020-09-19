@@ -7,6 +7,6 @@
         "src/entities/Player.js",
         "src/entities/PlayerAvatar.js",
 	"src/index.js",
-	"src/services/index.js",
+	"src/services/index.js"
     ]
 }
