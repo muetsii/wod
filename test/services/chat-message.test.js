@@ -90,5 +90,52 @@ describe('\'ChatMessage\' service', () => {
                 expect(chatMessages[i].playerid).to.equal(playerids[messages[i][0]]);
             }
         });
+
+        it('gets the messages from lastId', async () => {
+            // Arrange
+            const messages2 = [
+                [0, 'Por eso vete'],
+                [0, 'olvida mi nombre'],
+                [0, 'mi cara, mi casa'],
+                [0, 'y pega la vuelta'],
+                [1, 'Jamás te pude comprender'],
+            ];
+            const service = await app.service('chatmessage');
+            const { playerid } = 1;
+            const playerids = [0, 1];
+            playerids[0] = (await app.service('chatroom').create(
+                joinPlayers[0]
+            )).playerid;
+            playerids[1] = (await app.service('chatroom').create(
+                joinPlayers[1]
+            )).playerid;
+
+            // Act
+            for (let m of messages) {
+                await service.create({
+                    playerid: playerids[m[0]],
+                    message: m[1],
+                    chatroom: { name: roomName },
+                });
+            }
+            const firstMessages = await service.find({ query: {roomName}});
+            const lastId = firstMessages[firstMessages.length - 1].id;
+
+            for (let m of messages2) {
+                await service.create({
+                    playerid: playerids[m[0]],
+                    message: m[1],
+                    chatroom: { name: roomName },
+                });
+            }
+
+            const chatMessages = await service.find({ query: {roomName, lastId}});
+            
+            // Assert
+            for (let i = 0; i < messages2.length; i++) {
+                expect(chatMessages[i].message).to.equal(messages2[i][1]);
+                expect(chatMessages[i].playerid).to.equal(playerids[messages2[i][0]]);
+            }
+        });
     });
 });

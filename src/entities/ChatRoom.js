@@ -38,7 +38,7 @@ class ChatRoom {
 
         // this will have to change when we rotate
         return this.messages.slice(
-            lastId
+            lastId + 1
         );
     }
 
