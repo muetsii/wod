@@ -8,14 +8,14 @@ class ChatRoom {
     constructor(name) {
         this.name = name;
         this.messages = [];
-        this.players = [];
+        this.players = {};
         this.id = nextId++;
         this.nextMsgId = 0;
     }
 
     addPlayer(player) {
         // TODO: enforce maximum
-        this.players.push(player);
+        this.players[player.id] = player;
     }
 
     addMessage(player, message) {
@@ -24,6 +24,7 @@ class ChatRoom {
             // we could have the id from length... until we start rotating
             new ChatMessage(this.nextMsgId++, player, message)
         );
+        return this.messages[this.messages.length - 1];
     }
 
     getMessages(lastId) {
@@ -39,6 +40,14 @@ class ChatRoom {
         return this.messages.slice(
             lastId
         );
+    }
+
+    listPlayers() {
+        return Object.keys(this.players).map(id => this.players[id]);
+    }
+
+    getPlayerById(playerid) {
+        return this.players[playerid];
     }
 }
 

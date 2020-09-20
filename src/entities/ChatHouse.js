@@ -29,6 +29,20 @@ class ChatHouse {
             chatRoom
         };
     }
+
+    listPlayers(roomName) {
+        return this.chatRooms[roomName].getPlayers();
+    }
+
+    getChatMessages(roomName, lastId) {
+        return this.chatRooms[roomName].getMessages(lastId);
+    }
+
+    sendChatMessage(roomName, playerid, message) {
+        const room = this.chatRooms[roomName];
+        const player = room.getPlayerById(playerid);
+        return room.addMessage(player, message);
+    }
 }
 
 const singleton = new ChatHouse();
