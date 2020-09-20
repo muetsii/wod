@@ -31,7 +31,7 @@ class ChatHouse {
     }
 
     listPlayers(roomName) {
-        return this.chatRooms[roomName].getPlayers();
+        return this.chatRooms[roomName].listPlayers();
     }
 
     getChatMessages(roomName, lastId) {
