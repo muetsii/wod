@@ -8,5 +8,16 @@
         "src/entities/PlayerAvatar.js",
 	"src/index.js",
 	"src/services/index.js"
-    ]
+    ],
+    "test": [
+        "test/entities/ChatHouse.test.js",
+        "test/entities/PlayerAvatar.test.js",
+        "test/entities/Player.test.js",
+        "test/entities/ChatRoom.test.js",
+        "test/entities/ChatMessage.test.js",
+        "test/services/chat-message.test.js",
+        "test/services/player-list.test.js",
+        "test/services/chatroom.test.js",
+        "test/app.test.js"
+    ];
 }
