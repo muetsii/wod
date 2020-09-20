@@ -41,14 +41,14 @@ describe('ChatRoom', () => {
             for (let m of messages) {
                 chat.addMessage(player, m);
             }
-            const lastId = messages.findIndex(m => m == 'that');
+            const lastId = messages.findIndex(m => m == 'friends');
 
             // Act
             const chatMsgs = chat.getMessages(lastId);
 
             // Assert
             const greatSentence = chatMsgs.map(m => m.message).join(' ');
-            expect(greatSentence).to.equal('that is an order');
+            expect(greatSentence).to.equal('and that is an order');
         });
     });
 });
