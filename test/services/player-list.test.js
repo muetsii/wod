@@ -15,10 +15,10 @@ describe('\'PlayerList\' service', () => {
         beforeEach(() => {
             roomName = 'Sueños de la Alhambra';
             players = [
-                { name: "Salim" },
-                { name: "Harald" },
-                { name: "Kamal" },
-                { name: "Enrico" },
+                { name: 'Salim' },
+                { name: 'Harald' },
+                { name: 'Kamal' },
+                { name: 'Enrico' },
             ];
         });
 
