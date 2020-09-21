@@ -19,5 +19,5 @@
         "test/services/player-list.test.js",
         "test/services/chatroom.test.js",
         "test/app.test.js"
-    ];
+    ]
 }
