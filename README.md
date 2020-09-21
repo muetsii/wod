@@ -72,3 +72,19 @@ src/middleware/index.js
 src/app.js
 src/app.hooks.js
 
+
+# Instrucciones
+(Actividad 8)
+
+Instalar dependencias
+
+  npm install
+
+Ejecutar:
+
+  npm start
+
+Lanzar los tests:
+
+  npm test
+

@@ -4,12 +4,12 @@ const ChatHouse = require('../../entities/ChatHouse');
 
 exports.ChatRoom = class ChatRoom extends Service {
     // join
-    async create(data, params) {
+    async create(data/*, params*/) {
         const roomName = data.chatroom.name;
         const playerInfo = {
             name: data.player.name,
             avatar: data.player.avatar,
-        }
+        };
 
         const result = ChatHouse.singleton().join(roomName, playerInfo);
 
