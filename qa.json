@@ -9,6 +9,7 @@
 	"src/index.js",
 	"src/services/index.js"
     ],
+    "runner2": "npm",
     "test": [
         "test/entities/ChatHouse.test.js",
         "test/entities/PlayerAvatar.test.js",

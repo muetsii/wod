@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const rewire = require('rewire')
+const rewire = require('rewire');
 
 const Player = rewire('../../src/entities/Player');
 

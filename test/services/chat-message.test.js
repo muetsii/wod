@@ -67,7 +67,6 @@ describe('\'ChatMessage\' service', () => {
         it('gets the messages assigned to the same players', async () => {
             // Arrange
             const service = await app.service('chatmessage');
-            const { playerid } = 1;
             const playerids = [0, 1];
             playerids[0] = (await app.service('chatroom').create(
                 joinPlayers[0]
@@ -101,7 +100,6 @@ describe('\'ChatMessage\' service', () => {
                 [1, 'Jamás te pude comprender'],
             ];
             const service = await app.service('chatmessage');
-            const { playerid } = 1;
             const playerids = [0, 1];
             playerids[0] = (await app.service('chatroom').create(
                 joinPlayers[0]

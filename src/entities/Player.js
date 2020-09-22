@@ -5,8 +5,8 @@ let nextId = 0;
  */
 class Player {
     constructor(name, avatar) {
-	this.name = name;
-	this.avatar = avatar;
+        this.name = name;
+        this.avatar = avatar;
         this.id = nextId++;
     }
 }

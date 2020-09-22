@@ -14,7 +14,7 @@ exports.ChatMessage = class ChatMessage extends Service {
                 id: cm.id,
                 message: cm.message,
                 playerid: cm.player.id
-            }
+            };
         });
     }
 
