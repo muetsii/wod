@@ -1,5 +1,8 @@
 # World of Diceness
 
+[![Build Status](https://travis-ci.com/muetsii/wod.svg?branch=master)](https://travis-ci.com/muetsii/wod)
+
+
 Chat room to easily roll dice in World of Darkness games, focused on usability.
 
 ## Author
