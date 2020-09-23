@@ -1,6 +1,9 @@
 // Socket.io is exposed as the `io` global.
-const socket = io('http://api.feathersjs.com');
-  // p@feathersjs/client is exposed as the `feathers` global.
+const socket = io('localhost:3030', {
+    transports: ['websocket'],
+    forceNew: true,
+});
+// p@feathersjs/client is exposed as the `feathers` global.
 const app = feathers();
 
 console.log('hello');
@@ -33,13 +36,21 @@ async function joinRoom() {
 // Set up Socket.io client with the socket
 app.configure(feathers.socketio(socket));
 
-// Receive real-time events through Socket.io
-app.service('chat-message')
-    .on('created', message => console.log('New message created', message));
 
-// Call the `messages` service
-app.service('chat-message').create({
-    text: 'A message from a REST client'
+joinRoom().then(async () => {
+    // Receive real-time events through Socket.io
+    app.service('chatmessage')
+        .on('created', message => console.log('New message created', message));
+
+    // Call the `messages` service
+    await app.service('chatmessage').create({
+        chatroom,
+        playerid: me.id,
+        message: 'ola k ase',
+    });
+
+    // Call the `messages` service
+    console.log(await app.service('chatmessage').find({
+        query: { roomName: chatroom.name },
+    }));
 });
-
-joinRoom().then();
