@@ -91,7 +91,7 @@ Ejecutar:
 
 Lanzar los tests:
 
-  npm test
+  npm run test
 
 Comprobar cobertura de tests:
 
