@@ -112,3 +112,6 @@ data/
 # ---- Own ----
 # I decided that I will only maintain the package lock in release branches
 package-lock.json
+
+# .nyc
+.nyc_output

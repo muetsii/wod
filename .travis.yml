@@ -5,4 +5,6 @@ node_js:
   - "14"
 before_install:
   - npm install
-script: npm run check
+script:
+  - npm run check
+  - npm run codecov
