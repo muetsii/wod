@@ -1,6 +1,8 @@
 # World of Diceness
 
 [![Build Status](https://travis-ci.com/muetsii/wod.svg?branch=master)](https://travis-ci.com/muetsii/wod)
+[![codecov](https://codecov.io/gh/muetsii/wod/branch/master/graph/badge.svg)](https://codecov.io/gh/muetsii/wod)
+
 
 
 Chat room to easily roll dice in World of Darkness games, focused on usability.
@@ -90,4 +92,8 @@ Ejecutar:
 Lanzar los tests:
 
   npm test
+
+Comprobar cobertura de tests:
+
+  npm run coverage
 
