@@ -1,8 +1,5 @@
 // Socket.io is exposed as the `io` global.
-const socket = io('localhost:3030', {
-    transports: ['websocket'],
-    forceNew: true,
-});
+const socket = io();
 // p@feathersjs/client is exposed as the `feathers` global.
 const app = feathers();
 
@@ -40,7 +37,9 @@ app.configure(feathers.socketio(socket));
 joinRoom().then(async () => {
     // Receive real-time events through Socket.io
     app.service('chatmessage')
-        .on('created', message => console.log('New message created', message));
+        .on('created', message => {
+            console.log('New message created', message)
+        });
 
     // Call the `messages` service
     await app.service('chatmessage').create({
