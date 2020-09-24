@@ -52,4 +52,11 @@ joinRoom().then(async () => {
     console.log(await app.service('chatmessage').find({
         query: { roomName: chatroom.name },
     }));
+
+    // Call the `messages` service
+    await app.service('chatmessage').create({
+        chatroom,
+        playerid: me.id,
+        message: 'otro mensaje',
+    });
 });
