@@ -3,8 +3,6 @@ const socket = io();
 // p@feathersjs/client is exposed as the `feathers` global.
 const app = feathers();
 
-console.log('hello');
-
 const ROOM_NAME = 'losArchivosDeLaNoche';
 
 const chatroom = { name: ROOM_NAME };
@@ -29,6 +27,28 @@ async function joinRoom() {
     }
 }
 
+async function receiveMessage() {
+    const htmlMessageList = document.getElementById('message-list');
+    const lastId = me.lastId || 0;
+
+    const chatMessages = await app.service('chatmessage').find({
+        query: {
+            roomName: chatroom.name,
+            lastId,
+        }
+    });
+
+    const msgElements = chatMessages.map(
+        cm => `${cm.message}`
+    ).join('</li><li>');
+
+    const joinedMessage = `<li>${msgElements}</li>`;
+
+    htmlMessageList.innerHTML += joinedMessage;
+
+    me.lastId = chatMessages[chatMessages.length - 1].id;
+    console.log(joinedMessage);
+}
 
 // Set up Socket.io client with the socket
 app.configure(feathers.socketio(socket));
@@ -37,9 +57,7 @@ app.configure(feathers.socketio(socket));
 joinRoom().then(async () => {
     // Receive real-time events through Socket.io
     app.service('chatmessage')
-        .on('created', message => {
-            console.log('New message created', message)
-        });
+        .on('created', receiveMessage);
 
     // Call the `messages` service
     await app.service('chatmessage').create({
