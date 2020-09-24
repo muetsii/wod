@@ -1,3 +1,5 @@
+const logger = require('./logger.js');
+
 module.exports = function(app) {
     if(typeof app.channel !== 'function') {
     // If no real-time functionality has been configured just return
@@ -39,12 +41,20 @@ module.exports = function(app) {
     // eslint-disable-next-line no-unused-vars
     app.publish((data, hook) => {
     // Here you can add event publishers to channels set up in `channels.js`
-    // To publish only for a specific event use `app.publish(eventname, () => {})`
+        // To publish only for a specific event use `app.publish(eventname, () => {})`
 
-    console.log('Publishing all events to all authenticated users. See `channels.js` and https://docs.feathersjs.com/api/channels.html for more information.'); // eslint-disable-line
+        const channel = data.roomname || 'anonymous';
+
+        if (hook.path == 'chatroom' && hook.method == 'create') {
+            logger.info('entering the room', { data, channel });
+            app.channel(channel).join(hook.params.connection);
+        }
+
+        logger.debug('publishing event', { data, channel });
+
 
         // e.g. to publish all service events to all authenticated users use
-        return app.channel('authenticated');
+        return app.channel(channel);
     });
 
     // Here you can also add service specific event publishers

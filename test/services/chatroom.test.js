@@ -27,7 +27,7 @@ describe('\'chatroom\' service', () => {
 
             // Assert
             expect(res.playerid).to.be.a('number');
-            expect(res.chatroomid).to.be.a('number');
+            expect(res.roomname).to.equal(body.chatroom.name);
         });
 
         it('gets the same room with same name', async () => {
@@ -48,8 +48,8 @@ describe('\'chatroom\' service', () => {
             const rebu2 = await service.create(bodySame);
 
             // Assert
-            expect(rebu2.chatroomid).to.equal(rebus.chatroomid);
-            expect(bcnde.chatroomid).not.to.equal(rebus.chatroomid);
+            expect(rebu2.roomname).to.equal(rebus.roomname);
+            expect(bcnde.roomname).not.to.equal(rebus.roomname);
         });
     });
 });
