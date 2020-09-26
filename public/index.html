@@ -26,8 +26,16 @@
         </div>
         <div id="dice-area"></div>
       </div>
-      <div id="player-list"></div>
+      <div id="player-area">
+        <!-- TODO: redo with components -->
+          <ul id="player-list">
+            <li v-for="p in players">{{ p.name }}</li>
+          </ul>
+      </div>
     </div>
-    <div id="low-bar"></div>
+    <div id="low-bar">
+      <!-- TODO: make dynamic -->
+      <a href="https://github.com/muetsii/wod/">World of Diceness</a> by <a href="https://vampiro.asqueados.net">Los Archivos de la Noche</a>
+    </div>
   </body>
 </html>

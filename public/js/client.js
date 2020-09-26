@@ -47,11 +47,23 @@ const ChatArea = {
     },
 };
 
+const PlayerArea = {
+    data() {
+        return {
+            players: [
+                player,
+            ],
+        };
+    },
+};
+
+
 window.onload = async () => {
     await fillLabels();
     Vue.createApp(Document).mount('#title');
     Vue.createApp(Document).mount('#main-menu-bar');
     Vue.createApp(ChatArea).mount('#chat-area');
+    Vue.createApp(PlayerArea).mount('#player-area');
     Document.data();
 }
 
