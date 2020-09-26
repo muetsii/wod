@@ -66,4 +66,3 @@ window.onload = async () => {
     Vue.createApp(PlayerArea).mount('#player-area');
     Document.data();
 }
-
