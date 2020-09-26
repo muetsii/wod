@@ -23,10 +23,12 @@ describe('Feathers application tests', () => {
         server.close(done);
     });
 
-    it('starts and shows the index page', async () => {
+    it('starts and shows the index page with required components', async () => {
         const { data } = await axios.get(getUrl());
 
-        assert.ok(data.indexOf('<html lang="en">') !== -1);
+        assert.ok(data.indexOf('<div id="chat-area">') !== -1);
+        assert.ok(data.indexOf('<div id="dice-area">') !== -1);
+        assert.ok(data.indexOf('<div id="player-area">') !== -1);
     });
 
     describe('404', function() {
