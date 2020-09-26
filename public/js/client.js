@@ -9,8 +9,6 @@ let labels = {};
 let roomName = 'ROOM';
 let player = { name: 'nobody' };
 
-const chatMessages = [{player, message: 'fake message'}];
-
 async function fillLabels() {
     labels = await app.service('label').find();
 }
@@ -24,33 +22,27 @@ const Document = {
     }
 };
 
-const MessageList = {
-
-    data() {
-        return { chatMessages };
-    },
-
-    addMessage(player, message) {
-        chatMessages.push({
-            player,
-            message: this.message,
-        });
-    },
-};
-
-const InputArea = {
+const ChatArea = {
     data() {
         return {
-            label: labels.send,
-            message: '',
+            labelSend: labels.send,
+            inputMessage: '',
+            chatMessages: [],
         };
     },
 
     methods: {
         send() {
-            console.log(this.message);
-            MessageList.addMessage(player, this.message);
-            this.message = '';
+            console.log(this.inputMessage);
+            this.addMessage(player, this.inputMessage);
+            this.inputMessage = '';
+        },
+
+        addMessage() {
+            this.chatMessages.push({
+                player,
+                message: this.inputMessage,
+            });
         },
     },
 };
@@ -59,8 +51,7 @@ window.onload = async () => {
     await fillLabels();
     Vue.createApp(Document).mount('#title');
     Vue.createApp(Document).mount('#main-menu-bar');
-    Vue.createApp(InputArea).mount('#input-area');
-    Vue.createApp(MessageList).mount('#message-list');
+    Vue.createApp(ChatArea).mount('#chat-area');
     Document.data();
 }
 
