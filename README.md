@@ -89,6 +89,10 @@ Ejecutar:
 
   npm start
 
+o bien:
+
+  npm run run
+
 Lanzar los tests:
 
   npm run test
