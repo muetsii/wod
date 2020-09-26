@@ -9,6 +9,7 @@
 	"src/index.js",
 	"src/services/index.js"
     ],
+    "dateador": "test/libjdr/RandomCheater.js",
     "runner": "npm run",
     "test": [
         "test/entities/ChatHouse.test.js",

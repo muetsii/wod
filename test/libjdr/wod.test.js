@@ -1,5 +1,4 @@
 const { expect } = require('chai');
-const sinon = require('sinon');
 
 const wod = require('../../src/libjdr/wod');
 const RandomCheater = require('./RandomCheater');
@@ -16,9 +15,7 @@ describe('libjdr/wod', () => {
 
         beforeEach(() => {
             cheater = new RandomCheater();
-            sinon.stub(Math, 'random').callsFake(() => {
-                return cheater.shift();
-            });
+            wod.setRandomizer(cheater.shift.bind(cheater));
         });
 
         it('gets a result for each number', () => {
@@ -53,7 +50,7 @@ describe('libjdr/wod', () => {
         });
 
         it('v20 speciality', () => {
-            // Arrange
+            // Arrangep
             const speciality = 'v20';
             const rolls = [2, 10, 4, 10];
             cheater.push(rolls, 10);
@@ -79,7 +76,7 @@ describe('libjdr/wod', () => {
         });
 
         afterEach(() => {
-            sinon.restore();
+            wod.resetRandomizer();
         });
     });
 });
