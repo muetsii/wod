@@ -38,6 +38,46 @@ describe('libjdr/wod', () => {
             }
         });
 
+        it('v3 speciality', () => {
+            // Arrange
+            // chain 3 rolls
+            const speciality = 'v3';
+            const rolls = [2, 10, 4, 10].concat([8, 10]).concat(3);
+            cheater.push(rolls, 10);
+
+            // Act
+            const result = wod.xd(4, { speciality } );
+
+            // Assert
+            expect(result).to.eql(rolls);
+        });
+
+        it('v20 speciality', () => {
+            // Arrange
+            const speciality = 'v20';
+            const rolls = [2, 10, 4, 10];
+            cheater.push(rolls, 10);
+
+            // Act
+            const result = wod.xd(4, { speciality } );
+
+            // Assert
+            expect(result).to.eql(rolls.concat([10, 10]));
+        });
+
+        it('da speciality', () => {
+            // Arrange
+            const speciality = 'dav';
+            const rolls = [2, 3, 4, 7].concat(3);
+            cheater.push(rolls, 10);
+
+            // Act
+            const result = wod.xd(4, { speciality } );
+
+            // Assert
+            expect(result).to.eql(rolls);
+        });
+
         afterEach(() => {
             sinon.restore();
         });

@@ -4,10 +4,14 @@ class RandomCheater {
     }
 
     push(result, sides) {
-        if (sides) {
-            result = (result - 1) / sides;
+        const results = Array.isArray(result) ? result : [result];
+
+        for (let r of results) {
+            if (sides) {
+                r = (r - 1) / sides;
+            }
+            this.cheats.push(r);
         }
-        this.cheats.push(result);
     }
 
     shift() {
