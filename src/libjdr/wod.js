@@ -9,9 +9,10 @@ const jdr = require('./jdr');
  */
 function xd(x, options = {}) {
     let dice = new Array(x).fill(1).map(() => jdr.d10());
+    let tens, ntens;
     switch(options.speciality) {
     case 'v3':
-        let ntens = dice.filter(d => d == 10).length;
+        ntens = dice.filter(d => d == 10).length;
         for (let i = 0; i < ntens; i++) {
             const die = jdr.d10();
             if (die == 10) ntens++;
@@ -19,7 +20,7 @@ function xd(x, options = {}) {
         }
         break;
     case 'v20':
-        const tens = dice.filter(d => d == 10);
+        tens = dice.filter(d => d == 10);
         if (tens) {
             dice = dice.concat(tens);
         }
