@@ -2,7 +2,6 @@
 <html id="document">
   <head>
     <meta charset="utf-8">
-    <title id="title">{{ roomName }}: {{ title }}</title>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@3.0.0"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/core-js/2.1.4/core.min.js"></script>
@@ -11,9 +10,10 @@
 
     <script type="text/javascript" src="js/client.js"></script>
 
+    <title id="title">{{ roomName }} : {{ wod }}</title>
   </head>
   <body>
-    <div id="main-menu-bar">{{ title }}: {{ roomName }}</div>
+    <div id="main-menu-bar">{{ wod }} : {{ roomName }}</div>
     <div id="main-app">
       <div id="chat-area">
         <div id="messages">
@@ -22,7 +22,7 @@
           </ul>
         </div>
         <div id="input-area">
-          <input type="text" id="input-message" v-on:change="send" v-model="message">{{ message }}</input><input type="button" v-on:click="send">{{ label }}</input>
+          <input type="text" id="input-message" v-on:change="send" v-model="message"></input><button v-on:click="send">{{ label }}</button>
         </div>
         <div id="dice-area"></div>
       </div>
