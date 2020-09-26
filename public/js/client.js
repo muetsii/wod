@@ -9,6 +9,8 @@ let labels = {};
 let roomName = 'ROOM';
 let player = { name: 'nobody' };
 
+const chatMessages = [{player, message: 'fake message'}];
+
 async function fillLabels() {
     labels = await app.service('label').find();
 }
@@ -22,6 +24,20 @@ const Document = {
     }
 };
 
+const MessageList = {
+
+    data() {
+        return { chatMessages };
+    },
+
+    addMessage(player, message) {
+        chatMessages.push({
+            player,
+            message: this.message,
+        });
+    },
+};
+
 const InputArea = {
     data() {
         return {
@@ -33,6 +49,7 @@ const InputArea = {
     methods: {
         send() {
             console.log(this.message);
+            MessageList.addMessage(player, this.message);
             this.message = '';
         },
     },
@@ -43,6 +60,7 @@ window.onload = async () => {
     Vue.createApp(Document).mount('#title');
     Vue.createApp(Document).mount('#main-menu-bar');
     Vue.createApp(InputArea).mount('#input-area');
+    Vue.createApp(MessageList).mount('#message-list');
     Document.data();
 }
 
