@@ -10,9 +10,7 @@ describe('libjdr/jdr', () => {
 
         beforeEach(() => {
             cheater = new RandomCheater();
-            sinon.stub(Math, 'random').callsFake(() => {
-                return cheater.shift();
-            });
+            jdr.setRandomizer(cheater.shift.bind(cheater));
         });
 
         it('gets 0 and sides in the borders', () => {
