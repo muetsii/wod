@@ -41,16 +41,13 @@ async function receiveMessage() {
     newMessages.forEach(m => addPlayerInfo(m));
 
     // concat
-    Array.prototype.push.apply(chatMessages, newMessages);
+    Array.prototype.push.apply(vueChat.chatMessages, newMessages);
     me.lastId = chatMessages[chatMessages.length - 1].id;
-
-    // FIXME: vue component should autoupdate on prop change
-    vueChat.$forceUpdate();
 }
 
 async function receivePlayer(roomPlayers) {
     for(let p of roomPlayers) {
-        players[p.id] = p;
+        vuePlayers.players[p.id] = p;
     }
 }
 
