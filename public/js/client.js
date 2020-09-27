@@ -1,3 +1,15 @@
+/*
+ * My apologies, fellow developer.
+ *
+ * The code below is probably very bad. I am a backend developer and
+ * it's the first time I do front-end and I learned Vue on the way to
+ * do this.
+ *
+ * On the other hand, this is free software, even more, AGPL, so if you
+ * wish to help me to improve me, make me a PR in github.com/muetsii/wod
+ * and leave you improvement for all Humanity.
+ */
+
 // Socket.io is exposed as the `io` global.
 const socket = io();
 // p@feathersjs/client is exposed as the `feathers` global.
@@ -8,7 +20,7 @@ app.configure(feathers.socketio(socket));
 let labels = {};
 let roomName = 'ROOM';
 const chatroom = { name: roomName };
-const me = { name: `PJ_${Math.floor(Math.random()* 100)}` };
+const me = { name: `PJ_${Math.floor(Math.random() * 100)}` };
 const players = {};
 let chatMessages;
 
