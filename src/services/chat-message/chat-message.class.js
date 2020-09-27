@@ -6,7 +6,7 @@ exports.ChatMessage = class ChatMessage extends Service {
     async find(params) {
         const { roomName } = params.query;
         const lastId = params.query.lastId !== undefined ?
-              params.query.lastId : -1;
+            params.query.lastId : -1;
 
         const chatMessages = chatHouse.getChatMessages(roomName, lastId);
 
