@@ -8,7 +8,7 @@ app.configure(feathers.socketio(socket));
 let labels = {};
 let roomName = 'ROOM';
 const chatroom = { name: roomName };
-const me = { name: `PJ_${Math.random()%100}` };
+const me = { name: `PJ_${Math.floor(Math.random()* 100)}` };
 const players = { me };
 let chatMessages;
 
@@ -16,8 +16,46 @@ async function fillLabels() {
     labels = await app.service('label').find();
 }
 
+function sendMessage(player, message) {
+    app.service('chatmessage').create({
+        chatroom,
+        playerid: me.id,
+        message,
+    });
+}
+
+async function addPlayerInfo(chatMessage) {
+    chatMessage.player = players[chatMessage.playerid];
+}
+
+async function receiveMessage() {
+    const lastId = me.lastId || 0;
+
+    const newMessages = await app.service('chatmessage').find({
+        query: {
+            roomName: chatroom.name,
+            lastId,
+        }
+    });
+
+    newMessages.forEach(m => addPlayerInfo(m));
+
+    // concat
+    Array.prototype.push.apply(chatMessages, newMessages);
+    me.lastId = chatMessages[chatMessages.length - 1].id;
+
+    // FIXME: vue component should autoupdate on prop change
+    vueChat.$forceUpdate();
+}
+
+async function receivePlayer(roomPlayers) {
+    for(let p of roomPlayers) {
+        players[p.id] = p;
+    }
+}
+
+
 async function joinRoom() {
-    console.log('joinRoom start');
     try {
         const chatRoomService = await app.service('chatroom');
         const { playerid, chatroomid } = await chatRoomService.create({
@@ -34,6 +72,16 @@ async function joinRoom() {
     }
 }
 
+async function createRoomListeners() {
+    app.service('chatmessage')
+        .on('created', receiveMessage);
+    app.service('chatroom')
+        .on('created', async () => {
+            const roomPlayers = await app.service('player/list').find({ query: { roomName } });
+            receivePlayer(roomPlayers);
+        });
+}
+
 async function loadRoomInfo() {
     const [
         roomPlayers,
@@ -43,11 +91,17 @@ async function loadRoomInfo() {
         app.service('chatmessage').find({ query: { roomName } }),
     ]);
 
+    setPlayers(roomPlayers);
+
+    roomChatMessages.forEach(m => addPlayerInfo(m));
+    chatMessages = roomChatMessages;
+}
+
+function setPlayers(roomPlayers) {
     for (const p of roomPlayers) {
         players[p.id] = p;
     }
-    chatMessages = roomChatMessages;
-}
+}    
 
 const Document = {
     data() {
@@ -68,17 +122,10 @@ const ChatArea = {
     },
 
     methods: {
-        send() {
+        async send() {
             console.log(this.inputMessage);
-            this.addMessage();
+            await sendMessage(me, this.inputMessage);
             this.inputMessage = '';
-        },
-
-        addMessage() {
-            this.chatMessages.push({
-                player: players.me,
-                message: this.inputMessage,
-            });
         },
     },
 };
@@ -91,14 +138,17 @@ const PlayerArea = {
     },
 };
 
+let vueChat;
+let vuePlayers;
 
 window.onload = async () => {
     await fillLabels();
     await joinRoom();
     await loadRoomInfo();
+    await createRoomListeners();
     Vue.createApp(Document).mount('#title');
     Vue.createApp(Document).mount('#main-menu-bar');
-    Vue.createApp(ChatArea).mount('#chat-area');
-    Vue.createApp(PlayerArea).mount('#player-area');
+    vueChat = Vue.createApp(ChatArea).mount('#chat-area');
+    vuePlayers = Vue.createApp(PlayerArea).mount('#player-area');
     Document.data();
 }
