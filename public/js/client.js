@@ -9,7 +9,7 @@ let labels = {};
 let roomName = 'ROOM';
 const chatroom = { name: roomName };
 const me = { name: `PJ_${Math.floor(Math.random()* 100)}` };
-const players = { me };
+const players = {};
 let chatMessages;
 
 async function fillLabels() {
