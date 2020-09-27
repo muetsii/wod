@@ -29,7 +29,7 @@ async function addPlayerInfo(chatMessage) {
 }
 
 async function receiveMessage() {
-    const lastId = me.lastId || 0;
+    const lastId = me.lastId !== undefined ? me.lastId : -1;
 
     const newMessages = await app.service('chatmessage').find({
         query: {
@@ -95,6 +95,8 @@ async function loadRoomInfo() {
 
     roomChatMessages.forEach(m => addPlayerInfo(m));
     chatMessages = roomChatMessages;
+    if (chatMessages.length)
+        me.lastId = chatMessages[chatMessages.length - 1].id;
 }
 
 function setPlayers(roomPlayers) {
