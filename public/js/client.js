@@ -7,10 +7,46 @@ app.configure(feathers.socketio(socket));
 
 let labels = {};
 let roomName = 'ROOM';
-let player = { name: 'nobody' };
+const chatroom = { name: roomName };
+const me = { name: `PJ_${Math.random()%100}` };
+const players = { me };
+let chatMessages;
 
 async function fillLabels() {
     labels = await app.service('label').find();
+}
+
+async function joinRoom() {
+    console.log('joinRoom start');
+    try {
+        const chatRoomService = await app.service('chatroom');
+        const { playerid, chatroomid } = await chatRoomService.create({
+            chatroom,
+            player: me,
+        });
+
+        me.id = playerid;
+        chatroom.id = chatroomid;
+        players[me.id] = me;
+        console.log('I am ', me);
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+async function loadRoomInfo() {
+    const [
+        roomPlayers,
+        roomChatMessages,
+    ] = await Promise.all([
+        app.service('player/list').find({ query: { roomName } }),
+        app.service('chatmessage').find({ query: { roomName } }),
+    ]);
+
+    for (const p of roomPlayers) {
+        players[p.id] = p;
+    }
+    chatMessages = roomChatMessages;
 }
 
 const Document = {
@@ -27,20 +63,20 @@ const ChatArea = {
         return {
             labelSend: labels.send,
             inputMessage: '',
-            chatMessages: [],
+            chatMessages,
         };
     },
 
     methods: {
         send() {
             console.log(this.inputMessage);
-            this.addMessage(player, this.inputMessage);
+            this.addMessage();
             this.inputMessage = '';
         },
 
         addMessage() {
             this.chatMessages.push({
-                player,
+                player: players.me,
                 message: this.inputMessage,
             });
         },
@@ -50,9 +86,7 @@ const ChatArea = {
 const PlayerArea = {
     data() {
         return {
-            players: [
-                player,
-            ],
+            players
         };
     },
 };
@@ -60,6 +94,8 @@ const PlayerArea = {
 
 window.onload = async () => {
     await fillLabels();
+    await joinRoom();
+    await loadRoomInfo();
     Vue.createApp(Document).mount('#title');
     Vue.createApp(Document).mount('#main-menu-bar');
     Vue.createApp(ChatArea).mount('#chat-area');
