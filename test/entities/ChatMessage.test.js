@@ -25,15 +25,15 @@ describe('ChatMessage', () => {
             const id = 1444;
             const player = new Player('Miguelito');
             const message = 'ola k ase';
-            const ndice = 6;
+            const nDice = 6;
 
             // Act
-            const chtMsg = new ChatMessage(id, player, message, ndice);
+            const chtMsg = new ChatMessage(id, player, message, nDice);
 
             // Assert
             expect(chtMsg.hasRoll()).to.be.true;
-            expect(chtMsg.roll.result).to.be.an('Array');
-            expect(chtMsg.roll.result.length).to.equal(ndice);
+            expect(chtMsg.roll.result).to.be.an('Array').
+                that.has.lengthOf(nDice);
         });
     });
 });

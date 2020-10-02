@@ -14,7 +14,10 @@ describe('entities/Roll', () => {
             // Assert
             expect(roll.nDice).to.equal(nDice);
             expect(roll.result).to.be.an('Array');
-            expect(roll.result.length).to.equal(nDice);
+            expect(roll.result).to.have.lengthOf(nDice);
+            for(let die of roll.result) {
+                expect(die).to.be.a('number').within(1, 10);
+            }
         });
     });
 });
