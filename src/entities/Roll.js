@@ -1,8 +1,9 @@
 const wod = require('../libjdr/wod');
 
 class Roll {
-    constructor(nDices, options = {}) {
-        this.result = wod.xd(nDices, options);
+    constructor(nDice, options = {}) {
+        this.nDice = nDice;
+        this.result = wod.xd(nDice, options);
     }
 };
 

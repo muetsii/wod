@@ -5,7 +5,7 @@ class ChatMessage {
         this.id = id;
         this.player = player;
         this.message = message;
-        if (nDice) {
+        if (nDice && nDice > 0) {
             this.roll = new Roll(nDice);
         }
     }
