@@ -18,11 +18,11 @@ class ChatRoom {
         this.players[player.id] = player;
     }
 
-    addMessage(player, message) {
+    addMessage(player, message, nDice) {
         // TODO: have a maximum and rotate them
         this.messages.push(
             // we could have the id from length... until we start rotating
-            new ChatMessage(this.nextMsgId++, player, message)
+            new ChatMessage(this.nextMsgId++, player, message, nDice)
         );
         return this.messages[this.messages.length - 1];
     }

@@ -1,16 +1,20 @@
+const Roll = require('./Roll');
+
 class ChatMessage {
-    constructor(id, player, message) {
+    constructor(id, player, message, nDice) {
         this.id = id;
         this.player = player;
         this.message = message;
+        if (nDice && nDice > 0) {
+            this.roll = new Roll(nDice);
+        }
     }
 
     /**
      * Wether this has an associated roll
      */
     hasRoll() {
-        // to be implemented
-        return false;
+        return !!this.roll;
     }
 }
 

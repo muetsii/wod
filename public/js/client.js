@@ -17,6 +17,9 @@ const app = feathers();
 // Set up Socket.io client with the socket
 app.configure(feathers.socketio(socket));
 
+let vueChat;
+let vuePlayers;
+
 let labels = {};
 let roomName = 'ROOM';
 const chatroom = { name: roomName };
@@ -29,11 +32,18 @@ async function fillLabels() {
 }
 
 function sendMessage(player, message) {
-    app.service('chatmessage').create({
+    // If message is a number or a number followed by ;, this is a roll
+    const chatMessage = {
         chatroom,
         playerid: me.id,
         message,
-    });
+    }
+    const ndice = +message.split(';')[0].trim() || undefined;
+    if (ndice) {
+        chatMessage.roll = { ndice };
+    }
+
+    app.service('chatmessage').create(chatMessage);
 }
 
 async function addPlayerInfo(chatMessage) {
@@ -148,9 +158,6 @@ const PlayerArea = {
         };
     },
 };
-
-let vueChat;
-let vuePlayers;
 
 window.onload = async () => {
     await fillLabels();

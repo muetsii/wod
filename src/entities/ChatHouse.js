@@ -15,6 +15,10 @@ class ChatHouse {
         return ChatHouse.singleton();
     }
 
+    static reset() {
+        singleton.chatRooms = [];
+    }
+
     constructor() {
         this.chatRooms = {};
     }
@@ -38,10 +42,10 @@ class ChatHouse {
         return this.chatRooms[roomName].getMessages(lastId);
     }
 
-    sendChatMessage(roomName, playerid, message) {
+    sendChatMessage(roomName, playerid, message, nDice) {
         const room = this.chatRooms[roomName];
         const player = room.getPlayerById(playerid);
-        return room.addMessage(player, message);
+        return room.addMessage(player, message, nDice);
     }
 }
 

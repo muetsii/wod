@@ -19,6 +19,22 @@ describe('ChatMessage', () => {
             expect(chtMsg.player).to.equal(player);
             expect(chtMsg.message).to.equal(message);
         });
+
+        it('include a roll', () => {
+            // Arrange
+            const id = 1444;
+            const player = new Player('Miguelito');
+            const message = 'ola k ase';
+            const nDice = 6;
+
+            // Act
+            const chtMsg = new ChatMessage(id, player, message, nDice);
+
+            // Assert
+            expect(chtMsg.hasRoll()).to.be.true;
+            expect(chtMsg.roll.result).to.be.an('Array').
+                that.has.lengthOf(nDice);
+        });
     });
 });
 

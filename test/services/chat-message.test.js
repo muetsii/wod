@@ -1,5 +1,12 @@
 const { expect } = require('chai');
+const rewire = require('rewire');
+
 const app = require('../../src/app');
+
+const ChatHouse = require('../../src/entities/ChatHouse');
+const ChatMessageServiceModule = rewire(
+    '../../src/services/chat-message/chat-message.class'
+);
 
 describe('\'ChatMessage\' service', () => {
     it('registered the service', () => {
@@ -43,6 +50,12 @@ describe('\'ChatMessage\' service', () => {
         let roomName;
 
         beforeEach(() => {
+            ChatMessageServiceModule.__set__(
+                'chatHouse',
+                new ChatHouse(),
+            );
+            ChatHouse.reset();
+
             roomName = 'Pimpinela';
             playerNames = ['Lucía', 'Joaquín'];
             joinPlayers = [{
@@ -128,12 +141,46 @@ describe('\'ChatMessage\' service', () => {
             }
 
             const chatMessages = await service.find({ query: {roomName, lastId}});
-            
+
             // Assert
             for (let i = 0; i < messages2.length; i++) {
                 expect(chatMessages[i].message).to.equal(messages2[i][1]);
                 expect(chatMessages[i].playerid).to.equal(playerids[messages2[i][0]]);
             }
+        });
+
+        it('receives roll results in the message', async () => {
+            // Arrange
+            const service = await app.service('chatmessage');
+            const playerids = [0, 1];
+            playerids[0] = (await app.service('chatroom').create(
+                joinPlayers[0]
+            )).playerid;
+            playerids[1] = (await app.service('chatroom').create(
+                joinPlayers[1]
+            )).playerid;
+            const hun = 2, po = 3;
+
+            // Act
+            await service.create({
+                playerid: playerids[0],
+                message: 'roll hun',
+                roll: { ndice: hun },
+                chatroom: { name: roomName },
+            });
+
+            await service.create({
+                playerid: playerids[1],
+                message: 'roll pò',
+                roll: { ndice: po },
+                chatroom: { name: roomName },
+            });
+
+            const chatMessages = await service.find({ query: {roomName}});
+            expect(chatMessages[0].roll.result).to.be.an('Array');
+            expect(chatMessages[0].roll.result.length).to.equal(hun);
+            expect(chatMessages[1].roll.result).to.be.an('Array');
+            expect(chatMessages[1].roll.result.length).to.equal(po);
         });
     });
 });
