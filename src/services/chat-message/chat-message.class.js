@@ -15,6 +15,7 @@ exports.ChatMessage = class ChatMessage extends Service {
                 id: cm.id,
                 message: cm.message,
                 playerid: cm.player.id,
+                roll: cm.roll
             };
         });
     }
@@ -25,12 +26,16 @@ exports.ChatMessage = class ChatMessage extends Service {
             body.chatroom.name,
             body.playerid,
             body.message,
+            body.roll && body.roll.ndice,
         );
 
         const response = {
             chatmessageid: chatMessage.id,
             roomname: body.chatroom.name,
         };
+        if (chatMessage.hasRoll()) {
+            response.roll = chatMessage.roll;
+        }
 
         super.create(response, params);
         return response;
