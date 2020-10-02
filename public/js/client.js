@@ -33,13 +33,17 @@ async function fillLabels() {
 
 function sendMessage(player, message) {
     // If message is a number or a number followed by ;, this is a roll
-    const nDice = +message.split(';')[0].trim() || undefined;
-    app.service('chatmessage').create({
+    const chatMessage = {
         chatroom,
         playerid: me.id,
         message,
-        nDice,
-    });
+    }
+    const ndice = +message.split(';')[0].trim() || undefined;
+    if (ndice) {
+        chatMessage.roll = { ndice };
+    }
+
+    app.service('chatmessage').create(chatMessage);
 }
 
 async function addPlayerInfo(chatMessage) {
