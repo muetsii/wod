@@ -5,6 +5,6 @@ class Roll {
         this.nDice = nDice;
         this.result = wod.xd(nDice, options);
     }
-};
+}
 
 module.exports = Roll;
