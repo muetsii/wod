@@ -24,7 +24,18 @@
         <div id="input-area">
           <input type="text" id="input-message" v-on:change="send" v-model="inputMessage"></input><button v-on:click="send">{{ labelSend }}</button>
         </div>
-        <div id="dice-area"></div>
+        <div id="dice-area">
+          <button v-on:click="roll" id="dice01">1</button>
+          <button v-on:click="roll" id="dice02">2</button>
+          <button v-on:click="roll" id="dice03">3</button>
+          <button v-on:click="roll" id="dice04">4</button>
+          <button v-on:click="roll" id="dice05">5</button>
+          <button v-on:click="roll" id="dice06">6</button>
+          <button v-on:click="roll" id="dice07">7</button>
+          <button v-on:click="roll" id="dice08">8</button>
+          <button v-on:click="roll" id="dice09">9</button>
+          <button v-on:click="roll" id="dice10">10</button>
+        </div>
       </div>
       <div id="player-area">
         <!-- TODO: redo with components -->

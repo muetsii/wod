@@ -46,6 +46,17 @@ function sendMessage(player, message) {
     app.service('chatmessage').create(chatMessage);
 }
 
+function rollDice(ndice) {
+    const chatMessage = {
+        chatroom,
+        playerid: me.id,
+        message: '',
+        roll: { ndice },
+    };
+
+    app.service('chatmessage').create(chatMessage);
+}
+
 async function addPlayerInfo(chatMessage) {
     chatMessage.player = players[chatMessage.playerid];
 }
@@ -148,6 +159,12 @@ const ChatArea = {
             await sendMessage(me, this.inputMessage);
             this.inputMessage = '';
         },
+        async roll(click) {
+            console.log(click.target.id);
+            const ndice = +click.target.id.split('dice')[1];
+            console.log(ndice);
+            rollDice(ndice);
+        }
     },
 };
 
