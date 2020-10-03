@@ -15,6 +15,11 @@
   <body>
     <div id="main-menu-bar">{{ wod }} : {{ roomName }}</div>
     <div id="main-app">
+      <div id="lobby">
+        {{ labelPlayerName }}<input type="text" id="playername" v-model="playerName"></input>
+        {{ labelRoomName }}<input type="text" id="roomname" v-model="roomName"></input>
+        <button v-on:click="changeRoom">{{ labelChange || 'change' }}</button>
+      </div>
       <div id="chat-area">
         <div id="messages">
           <ul id="message-list">

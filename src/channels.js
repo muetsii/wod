@@ -48,6 +48,7 @@ module.exports = function(app) {
         if (hook.path == 'chatroom' && hook.method == 'create') {
             logger.info('entering the room', { data, channel });
             app.channel(channel).join(hook.params.connection);
+            // TODO: leave the other channels
         }
 
         logger.debug('publishing event', { data, channel });
