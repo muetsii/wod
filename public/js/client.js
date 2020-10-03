@@ -173,7 +173,6 @@ const ChatArea = {
             this.inputMessage = '';
         },
         async roll(click) {
-            console.log(click.target.id);
             const ndice = +click.target.id.split('dice')[1];
             console.log(ndice);
             rollDice(ndice);
