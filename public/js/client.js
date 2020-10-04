@@ -97,7 +97,7 @@ async function joinRoom() {
 
 async function leaveRoom() {
     const chatRoomService = await app.service('chatroom');
-    const { playerid, chatroomid } = await chatRoomService.delete({
+    const { playerid, chatroomid } = await chatRoomService.remove({
         chatroom,
         player: me,
     });
@@ -161,10 +161,12 @@ const Lobby = {
 
     methods: {
         async changeRoom() {
-            async leaveRoom(chatroom.name);
-            chatroom.name = this.roomName;
             me.name = this.playerName;
-            await reload();
+            if (chatroom.name != this.roomName) {
+                await leaveRoom(chatroom.name);
+                chatroom.name = this.roomName;
+                await reload();
+            }
         }
     }
 };
@@ -198,7 +200,6 @@ const PlayerArea = {
 const load = async () => {
     await joinRoom();
     await loadRoomInfo();
-    await createRoomListeners();
 };
 
 const createVues = () => {
@@ -231,5 +232,6 @@ window.onload = async () => {
     await fillLabels();
     createVues();
     await load();
+    await createRoomListeners();
 };
 

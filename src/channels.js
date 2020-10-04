@@ -50,7 +50,7 @@ module.exports = function(app) {
                 logger.info('entering the room', { data, channel });
                 app.channel(channel).join(hook.params.connection);
                 // TODO: leave the other channels
-            } else if (hook.method == 'delete') {
+            } else if (hook.method == 'remove') {
                 logger.info('leaving the room', { data, channel });
                 app.channel(channel).leave(hook.params.connection);
             }

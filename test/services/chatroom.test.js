@@ -53,7 +53,7 @@ describe('\'chatroom\' service', () => {
         });
     });
 
-    describe('delete (leave)', () => {
+    describe('remove (leave)', () => {
         it('does not explode', async () => {
             // Arrange
             const service = app.service('chatroom');
@@ -78,7 +78,7 @@ describe('\'chatroom\' service', () => {
 
             // Act
             for (let player of players) {
-                await service.delete({chatroom, player});
+                await service.remove({chatroom, player});
             }
             // Assert
         });
