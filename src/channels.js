@@ -45,10 +45,15 @@ module.exports = function(app) {
 
         const channel = data.roomname || 'anonymous';
 
-        if (hook.path == 'chatroom' && hook.method == 'create') {
-            logger.info('entering the room', { data, channel });
-            app.channel(channel).join(hook.params.connection);
-            // TODO: leave the other channels
+        if (hook.path == 'chatroom') {
+            if (hook.method == 'create') {
+                logger.info('entering the room', { data, channel });
+                app.channel(channel).join(hook.params.connection);
+                // TODO: leave the other channels
+            } else if (hook.method == 'delete') {
+                logger.info('leaving the room', { data, channel });
+                app.channel(channel).leave(hook.params.connection);
+            }
         }
 
         logger.debug('publishing event', { data, channel });

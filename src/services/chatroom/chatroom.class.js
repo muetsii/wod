@@ -20,4 +20,14 @@ exports.ChatRoom = class ChatRoom extends Service {
 
         return response;
     }
+
+    // leave
+    async delete(data) {
+        const roomName = data.chatroom.name;
+        // FIXME: this is a scurity risk, we allow clients to disonnect other users
+        // I should store player information in the connection instead
+        const { player } = data;
+
+        const result = ChatHouse.st().leave(roomName, playerInfo);
+    }
 };

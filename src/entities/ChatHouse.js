@@ -1,3 +1,5 @@
+const logger = require('../logger');
+
 const ChatRoom = require('./ChatRoom');
 const Player = require('./Player');
 
@@ -32,6 +34,18 @@ class ChatHouse {
             player,
             chatRoom
         };
+    }
+
+    leave(roomName, playerInfo) {
+        const chatRoom = this.chatRooms[roomName];
+        if (chatRoom) {
+            chatRoom.removePlayer(playerInfo.id);
+            if (chatRoom.isEmpty()) {
+                delete this.chatRooms[roomName];
+            }
+        } else {
+            logger.error('Trying to leave a non existing room', { roomName, playerInfo });
+        }
     }
 
     listPlayers(roomName) {

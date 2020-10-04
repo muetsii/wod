@@ -24,4 +24,33 @@ describe('ChatHouse', () => {
             expect(chatRoom.players[0]).to.equal(player);
         });
     });
+
+    describe('leave', () => {
+        it('deletes the room when empty', () => {
+            // Arrange
+            const roomName = 'Antilla';
+            const playerNames = [
+                { name: 'Diego' },
+                { name: 'Roger' },
+                { name: 'Anabelle' },
+            ];
+
+            const chatHouse = new ChatHouse();
+
+            const players = playerNames.map((playerName) => {
+                return {
+                    name: playerName.name,
+                    id: chatHouse.join(roomName, playerName),
+                };
+            });
+
+            // Act
+            for (let p of players) {
+                chatHouse.leave(roomName, p);
+            }
+
+            // Assert
+            expect(chatHouse.chatRooms[roomName]).to.be.undefined;
+        });
+    });
 });

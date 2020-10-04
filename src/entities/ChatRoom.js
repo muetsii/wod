@@ -18,6 +18,21 @@ class ChatRoom {
         this.players[player.id] = player;
     }
 
+    removePlayer(playerId) {
+        if (this.players[playerId]) {
+            delete this.players[playerId];
+        } else {
+            logger.error(
+                'Trying to remove a non existing player',
+                { roomName: this.name, playerId }
+            );
+        }
+    }
+
+    isEmpty() {
+        return this.players.length != 0;
+    }
+
     addMessage(player, message, nDice) {
         // TODO: have a maximum and rotate them
         this.messages.push(
