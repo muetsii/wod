@@ -33,9 +33,13 @@
       </div>
       <div id="player-area">
         <!-- TODO: redo with components -->
-          <ul id="player-list">
-            <li v-for="p in players">{{ p.name }}</li>
-          </ul>
+        <ul id="player-list">
+          <span v-for="p in players">
+            <span v-if="p.active">
+              <li >{{ p.active && p.name || ''}}</li>
+            </span>
+          </span>
+        </ul>
       </div>
     </div>
     <div id="low-bar">
