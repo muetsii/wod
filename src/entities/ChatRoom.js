@@ -20,7 +20,7 @@ class ChatRoom {
 
     removePlayer(playerId) {
         if (this.players[playerId]) {
-            delete this.players[playerId];
+            this.players[playerId].setActive(false);
         } else {
             logger.error(
                 'Trying to remove a non existing player',
@@ -30,7 +30,9 @@ class ChatRoom {
     }
 
     isEmpty() {
-        return this.players.length != 0;
+        return Object.keys(this.players).every(
+            (id) => this.players[id].isActive()
+        );
     }
 
     addMessage(player, message, nDice) {

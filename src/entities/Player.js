@@ -8,6 +8,15 @@ class Player {
         this.name = name;
         this.avatar = avatar;
         this.id = nextId++;
+        this.active = true;
+    }
+
+    isActive() {
+        return this.active;
+    }
+
+    setActive(active) {
+        this.active = active;
     }
 }
 
