@@ -27,7 +27,6 @@ let labels = {};
 let roomName = 'ROOM';
 const chatroom = { name: roomName };
 const me = { name: `PJ_${Math.floor(Math.random() * 100)}` };
-const players = {};
 
 async function fillLabels() {
     labels = await app.service('label').find();
@@ -131,8 +130,8 @@ async function loadRoomInfo() {
 
 function setPlayers(roomPlayers) {
     // TODO: move to PlayerArea object
-    for (let p of Object.keys(vuePlayers.players)) {
-        delete vuePlayers.players[p];
+    for (let pid of Object.keys(vuePlayers.players)) {
+        delete vuePlayers.players[pid];
     }
     for (const p of roomPlayers) {
         vuePlayers.players[p.id] = p;
@@ -162,11 +161,9 @@ const Lobby = {
     methods: {
         async changeRoom() {
             me.name = this.playerName;
-            if (chatroom.name != this.roomName) {
-                await leaveRoom(chatroom.name);
-                chatroom.name = this.roomName;
-                await reload();
-            }
+            await leaveRoom(chatroom.name);
+            chatroom.name = this.roomName;
+            await reload();
         }
     }
 };
