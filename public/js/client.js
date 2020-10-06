@@ -47,8 +47,32 @@ function sendMessage(player, message) {
     app.service('chatmessage').create(chatMessage);
 }
 
-async function addPlayerInfo(chatMessage) {
+function rollDice(ndice) {
+    const chatMessage = {
+        chatroom,
+        playerid: me.id,
+        message: '',
+        roll: { ndice },
+    };
+
+    app.service('chatmessage').create(chatMessage);
+}
+
+async function processChatMessage(chatMessage) {
     chatMessage.player = vuePlayers.players[chatMessage.playerid];
+    if (chatMessage.roll) {
+        const sorted = chatMessage.roll.result.slice(0);
+        sorted.sort((a, b) => {
+            if (a > b) {
+                return 1;
+            } else if (a < b) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        chatMessage.roll.sorted = sorted;
+    }
 }
 
 async function receiveMessage() {
@@ -61,7 +85,7 @@ async function receiveMessage() {
         }
     });
 
-    newMessages.forEach(m => addPlayerInfo(m));
+    newMessages.forEach(m => processChatMessage(m));
 
     // concat
     Array.prototype.push.apply(vueChat.chatMessages, newMessages);
@@ -122,7 +146,7 @@ async function loadRoomInfo() {
 
     setPlayers(roomPlayers);
 
-    roomChatMessages.forEach(m => addPlayerInfo(m));
+    roomChatMessages.forEach(m => processChatMessage(m));
     Array.prototype.push.apply(vueChat.chatMessages, roomChatMessages);
     if (vueChat.chatMessages.length)
         me.lastId = vueChat.chatMessages[vueChat.chatMessages.length - 1].id;
@@ -183,6 +207,11 @@ const ChatArea = {
             await sendMessage(me, this.inputMessage);
             this.inputMessage = '';
         },
+        async roll(click) {
+            const ndice = +click.target.id.split('dice')[1];
+            console.log(ndice);
+            rollDice(ndice);
+        }
     },
 };
 
