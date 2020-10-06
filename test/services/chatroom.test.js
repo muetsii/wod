@@ -52,4 +52,36 @@ describe('\'chatroom\' service', () => {
             expect(bcnde.roomname).not.to.equal(rebus.roomname);
         });
     });
+
+    describe('remove (leave)', () => {
+        it('does not explode', async () => {
+            // Arrange
+            const service = app.service('chatroom');
+
+            const chatroom = { name: 'Crossover paths' };
+            const playerNames = [
+                { name: 'Gui Ren' },
+                { name: 'Hengeyokai' },
+                { name: 'Mage' },
+                { name: 'Hsien' },
+            ];
+
+            const players = await playerNames.map(async (playerName) => {
+                return {
+                    name: playerName.name,
+                    id: (await service.create({
+                        chatroom,
+                        player: playerName
+                    })).playerid,
+                };
+            });
+
+            // Act
+            for (let player of players) {
+                await service.remove({chatroom, player});
+            }
+            // Assert
+        });
+
+    });
 });

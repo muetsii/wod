@@ -17,15 +17,16 @@ const app = feathers();
 // Set up Socket.io client with the socket
 app.configure(feathers.socketio(socket));
 
+let vueTitle;
+let vueMenu;
 let vueChat;
-let vuePlayers;
+let vueLobby;
+let vues = [];
 
 let labels = {};
-let roomName = 'ROOM';
+let roomName = 'Lobby';
 const chatroom = { name: roomName };
 const me = { name: `PJ_${Math.floor(Math.random() * 100)}` };
-const players = {};
-let chatMessages;
 
 async function fillLabels() {
     labels = await app.service('label').find();
@@ -58,7 +59,7 @@ function rollDice(ndice) {
 }
 
 async function processChatMessage(chatMessage) {
-    chatMessage.player = players[chatMessage.playerid];
+    chatMessage.player = vuePlayers.players[chatMessage.playerid];
     if (chatMessage.roll) {
         const sorted = chatMessage.roll.result.slice(0);
         sorted.sort((a, b) => {
@@ -88,7 +89,7 @@ async function receiveMessage() {
 
     // concat
     Array.prototype.push.apply(vueChat.chatMessages, newMessages);
-    me.lastId = chatMessages[chatMessages.length - 1].id;
+    me.lastId = vueChat.chatMessages[vueChat.chatMessages.length - 1].id;
 }
 
 async function receivePlayer(roomPlayers) {
@@ -107,22 +108,31 @@ async function joinRoom() {
         });
 
         me.id = playerid;
+        me.lastId = -1;
         chatroom.id = chatroomid;
-        players[me.id] = me;
+        vuePlayers.players[me.id] = me;
+        if(vueChat) vueChat.chatMessages.splice(0, vueChat.chatMessages.length);
         console.log('I am ', me);
     } catch (e) {
         console.error(e);
     }
 }
 
+async function leaveRoom() {
+    const chatRoomService = await app.service('chatroom');
+    const { playerid, chatroomid } = await chatRoomService.remove({
+        chatroom,
+        player: me,
+    });
+}
+
 async function createRoomListeners() {
     app.service('chatmessage')
         .on('created', receiveMessage);
-    app.service('chatroom')
-        .on('created', async () => {
-            const roomPlayers = await app.service('player/list').find({ query: { roomName } });
-            receivePlayer(roomPlayers);
-        });
+    app.service('chatroom') .on('created', async (response) => {
+        const roomPlayers = await app.service('player/list').find({ query: { roomName: chatroom.name } });
+        receivePlayer(roomPlayers);
+    });
 }
 
 async function loadRoomInfo() {
@@ -130,30 +140,55 @@ async function loadRoomInfo() {
         roomPlayers,
         roomChatMessages,
     ] = await Promise.all([
-        app.service('player/list').find({ query: { roomName } }),
-        app.service('chatmessage').find({ query: { roomName } }),
+        app.service('player/list').find({ query: { roomName: chatroom.name } }),
+        app.service('chatmessage').find({ query: { roomName: chatroom.name } }),
     ]);
 
     setPlayers(roomPlayers);
 
     roomChatMessages.forEach(m => processChatMessage(m));
-    chatMessages = roomChatMessages;
-    if (chatMessages.length)
-        me.lastId = chatMessages[chatMessages.length - 1].id;
+    Array.prototype.push.apply(vueChat.chatMessages, roomChatMessages);
+    if (vueChat.chatMessages.length)
+        me.lastId = vueChat.chatMessages[vueChat.chatMessages.length - 1].id;
 }
 
 function setPlayers(roomPlayers) {
+    // TODO: move to PlayerArea object
+    for (let pid of Object.keys(vuePlayers.players)) {
+        delete vuePlayers.players[pid];
+    }
     for (const p of roomPlayers) {
-        players[p.id] = p;
+        vuePlayers.players[p.id] = p;
     }
 }    
 
 const Document = {
     data() {
         return {
-            roomName,
+            roomName: chatroom.name,
             wod: labels.wod,
         };
+    }
+};
+
+const Lobby = {
+    data() {
+        return {
+            labelPlayerName: labels.playerName,
+            labelRoomName: labels.roomName,
+            labelChange: labels.change,
+            playerName: me.name,
+            roomName: chatroom.name,
+        };
+    },
+
+    methods: {
+        async changeRoom() {
+            me.name = this.playerName;
+            await leaveRoom(chatroom.name);
+            chatroom.name = this.roomName;
+            await reload();
+        }
     }
 };
 
@@ -162,7 +197,7 @@ const ChatArea = {
         return {
             labelSend: labels.send,
             inputMessage: '',
-            chatMessages,
+            chatMessages: [],
         };
     },
 
@@ -183,19 +218,46 @@ const ChatArea = {
 const PlayerArea = {
     data() {
         return {
-            players
+            players: {}
         };
     },
 };
 
-window.onload = async () => {
-    await fillLabels();
+const load = async () => {
     await joinRoom();
     await loadRoomInfo();
-    await createRoomListeners();
-    Vue.createApp(Document).mount('#title');
-    Vue.createApp(Document).mount('#main-menu-bar');
+};
+
+const createVues = () => {
+    vueTitle = Vue.createApp(Document).mount('#title');
+    vueMenu = Vue.createApp(Document).mount('#main-menu-bar');
     vueChat = Vue.createApp(ChatArea).mount('#chat-area');
     vuePlayers = Vue.createApp(PlayerArea).mount('#player-area');
-    Document.data();
+    vueLobby = Vue.createApp(Lobby).mount('#lobby');
+    vues = [
+        vueTitle,
+        vueMenu,
+        vueChat,
+        vuePlayers,
+        vueLobby,
+    ];
+};
+
+const updateVues = () => {
+    for (let v of vues) {
+        v.$forceUpdate();
+    }
 }
+
+const reload  = async () => {
+    await load();
+    updateVues();
+};
+
+window.onload = async () => {
+    await fillLabels();
+    createVues();
+    await load();
+    await createRoomListeners();
+};
+
