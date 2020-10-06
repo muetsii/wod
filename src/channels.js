@@ -11,6 +11,13 @@ module.exports = function(app) {
         app.channel('anonymous').join(connection);
     });
 
+    app.on('disconnect', connection => {
+        app.service('chatroom').remove({
+            chatroom: { name: connection.roomname },
+            player: { id: connection.playerid },
+        });
+    });
+
     app.on('login', (authResult, { connection }) => {
     // connection can be undefined if there is no
     // real-time connection, e.g. when logging in via REST
@@ -50,6 +57,8 @@ module.exports = function(app) {
                 logger.info('entering the room', { data, channel });
                 app.channel(channel).join(hook.params.connection);
                 // TODO: leave the other channels
+                hook.params.connection.roomname = data.roomname;
+                hook.params.connection.playerid = data.playerid;
             } else if (hook.method == 'remove') {
                 logger.info('leaving the room', { data, channel });
                 app.channel(channel).leave(hook.params.connection);
