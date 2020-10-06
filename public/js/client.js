@@ -72,6 +72,8 @@ async function processChatMessage(chatMessage) {
             }
         });
         chatMessage.roll.sorted = sorted;
+
+        vuePlayers.players[chatMessage.playerid].roll = chatMessage.roll;
     }
 }
 
