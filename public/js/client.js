@@ -24,7 +24,7 @@ let vueLobby;
 let vues = [];
 
 let labels = {};
-let roomName = 'ROOM';
+let roomName = 'Lobby';
 const chatroom = { name: roomName };
 const me = { name: `PJ_${Math.floor(Math.random() * 100)}` };
 
