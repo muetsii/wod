@@ -25,3 +25,6 @@ hu-04-02: situar los botones en la página
 hu-04-03: hacer que los botones soliciten tiradas
 hu-04-04: efecto hover sobre los botones
 hu-04-05: última tirada sobre la caja de usuario
+
+HITO05: infrastructure
+hu-05-01: deploy on heroku
