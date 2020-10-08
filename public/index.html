@@ -23,7 +23,7 @@
       <div id="chat-area">
         <div id="messages">
           <ul id="message-list">
-            <li v-for="m in chatMessages">{{ m.player.name }}: {{ m.roll && m.roll.sorted || '' }} {{ m.message }}</li>
+            <li v-for="m in chatMessages">{{ m.player.name }}: <span style="roll">{{ m.roll && m.roll.sorted || '' }}</span> {{ m.message }}</li>
           </ul>
         </div>
         <div id="input-area">
@@ -47,7 +47,11 @@
         <ul id="player-list">
           <span v-for="p in players">
             <span v-if="p.active">
-              <li >{{ p.active && p.name || ''}}</li>
+              <li >{{ p.active && p.name || ''}}
+                <span v-if="p.roll" class="roll">
+                  {{ p.roll.sorted }}
+                </span>
+              </li>
             </span>
           </span>
         </ul>
