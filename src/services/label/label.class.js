@@ -13,7 +13,7 @@ class Label {
     async find (params) {
         return LABELS;
     }
-};
+}
 
 Label.CONF = ['sitename'];
 
