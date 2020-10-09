@@ -168,7 +168,7 @@ const Document = {
     data() {
         return {
             roomName: chatroom.name,
-            wod: labels.wod,
+            sitename: labels.sitename,
         };
     }
 };
