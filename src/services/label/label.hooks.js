@@ -1,4 +1,10 @@
+const { Label } = require('./label.class');
 
+function addConfigurationLabels(context) {
+    for (let conf of Label.CONF) {
+        context.result[conf] = context.app.get(conf);
+    }
+}
 
 module.exports = {
     before: {
@@ -13,7 +19,7 @@ module.exports = {
 
     after: {
         all: [],
-        find: [],
+        find: [addConfigurationLabels],
         get: [],
         create: [],
         update: [],

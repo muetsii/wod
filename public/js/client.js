@@ -72,6 +72,8 @@ async function processChatMessage(chatMessage) {
             }
         });
         chatMessage.roll.sorted = sorted;
+
+        vuePlayers.players[chatMessage.playerid].roll = chatMessage.roll;
     }
 }
 
@@ -166,7 +168,7 @@ const Document = {
     data() {
         return {
             roomName: chatroom.name,
-            wod: labels.wod,
+            sitename: labels.sitename,
         };
     }
 };

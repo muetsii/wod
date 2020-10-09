@@ -5,7 +5,7 @@ const LABELS = {
 };
 
 /* eslint-disable no-unused-vars */
-exports.Label = class Label {
+class Label {
     constructor (options) {
         this.options = options || {};
     }
@@ -13,4 +13,8 @@ exports.Label = class Label {
     async find (params) {
         return LABELS;
     }
-};
+}
+
+Label.CONF = ['sitename'];
+
+module.exports.Label = Label;
