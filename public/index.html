@@ -2,7 +2,7 @@
 <html id="document">
   <head>
     <meta charset="utf-8">
-
+    <link href="css/main.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@3.0.0"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/core-js/2.1.4/core.min.js"></script>
     <script src="//unpkg.com/@feathersjs/client@^3.0.0/dist/feathers.js"></script>
@@ -13,7 +13,7 @@
     <title id="title">{{ roomName }} : {{ sitename }}</title>
   </head>
   <body>
-    <div id="main-menu-bar">{{ sitename }} : {{ roomName }}</div>
+    <div id="main-menu-bar"><h1>{{ sitename }} : {{ roomName }}</h1></div>
     <div id="main-app">
       <div id="lobby">
         {{ labelPlayerName }}<input type="text" id="playername" v-model="playerName"></input>
@@ -23,23 +23,23 @@
       <div id="chat-area">
         <div id="messages">
           <ul id="message-list">
-            <li v-for="m in chatMessages">{{ m.player.name }}: <span style="roll">{{ m.roll && m.roll.sorted || '' }}</span> {{ m.message }}</li>
+            <li v-for="m in chatMessages">{{ m.player.name }}: <span class="roll">{{ m.roll && m.roll.sorted || '' }}</span> {{ m.message }}</li>
           </ul>
         </div>
         <div id="input-area">
-          <input type="text" id="input-message" v-on:change="send" v-model="inputMessage"></input><button v-on:click="send">{{ labelSend }}</button>
+          <input type="text" id="input-message" v-on:change="send" v-model="inputMessage"></input><button v-on:click="send" id="button-send">{{ labelSend }}</button>
         </div>
         <div id="dice-area">
-          <button v-on:click="roll" id="dice01">1</button>
-          <button v-on:click="roll" id="dice02">2</button>
-          <button v-on:click="roll" id="dice03">3</button>
-          <button v-on:click="roll" id="dice04">4</button>
-          <button v-on:click="roll" id="dice05">5</button>
-          <button v-on:click="roll" id="dice06">6</button>
-          <button v-on:click="roll" id="dice07">7</button>
-          <button v-on:click="roll" id="dice08">8</button>
-          <button v-on:click="roll" id="dice09">9</button>
-          <button v-on:click="roll" id="dice10">10</button>
+          <button v-on:click="roll" class="die" id="dice01">1</button>
+          <button v-on:click="roll" class="die" id="dice02">2</button>
+          <button v-on:click="roll" class="die" id="dice03">3</button>
+          <button v-on:click="roll" class="die" id="dice04">4</button>
+          <button v-on:click="roll" class="die" id="dice05">5</button>
+          <button v-on:click="roll" class="die" id="dice06">6</button>
+          <button v-on:click="roll" class="die" id="dice07">7</button>
+          <button v-on:click="roll" class="die" id="dice08">8</button>
+          <button v-on:click="roll" class="die" id="dice09">9</button>
+          <button v-on:click="roll" class="die" id="dice10">10</button>
         </div>
       </div>
       <div id="player-area">

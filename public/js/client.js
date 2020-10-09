@@ -231,7 +231,7 @@ const load = async () => {
 };
 
 const createVues = () => {
-    vueTitle = Vue.createApp(Document).mount('#title');
+    vueTitle = Vue.createApp({ ...Document }).mount('#title');
     vueMenu = Vue.createApp(Document).mount('#main-menu-bar');
     vueChat = Vue.createApp(ChatArea).mount('#chat-area');
     vuePlayers = Vue.createApp(PlayerArea).mount('#player-area');

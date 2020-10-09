@@ -1,0 +1,49 @@
+html {
+    background-color: seagreen;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: XL;
+    color: white;
+    text-align: center;
+    text-shadow: 3px 3px 5px grey;
+}
+
+a {
+    color: gold;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    font-size: 140%;
+}
+
+#messages {
+    background-color: linen;
+    padding: 2px;
+    height: 100%;
+    align: center;
+}
+
+#lowbar {
+    align: bottom;
+}
+
+#input-area {
+    width: 100%;
+}
+
+.die {
+    border-radius: 50%;
+    font-size: large;
+    width: 40px;
+    height: 40px;
+}
+
+.roll {
+    font-size: 120%;
+    color: maroon;
+    font-weight: bold;
+}
