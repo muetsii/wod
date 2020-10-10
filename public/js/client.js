@@ -168,7 +168,7 @@ const Document = {
     data() {
         return {
             roomName: chatroom.name,
-            wod: labels.wod,
+            sitename: labels.sitename,
         };
     }
 };
@@ -176,9 +176,9 @@ const Document = {
 const Lobby = {
     data() {
         return {
-            labelPlayerName: labels.playerName,
-            labelRoomName: labels.roomName,
-            labelChange: labels.change,
+            labelPlayerName: labels.player.name,
+            labelRoomName: labels.room.name,
+            labelChange: labels.action.change,
             playerName: me.name,
             roomName: chatroom.name,
         };
@@ -197,7 +197,7 @@ const Lobby = {
 const ChatArea = {
     data() {
         return {
-            labelSend: labels.send,
+            labelSend: labels.action.send,
             inputMessage: '',
             chatMessages: [],
         };
@@ -231,7 +231,7 @@ const load = async () => {
 };
 
 const createVues = () => {
-    vueTitle = Vue.createApp(Document).mount('#title');
+    vueTitle = Vue.createApp({ ...Document }).mount('#title');
     vueMenu = Vue.createApp(Document).mount('#main-menu-bar');
     vueChat = Vue.createApp(ChatArea).mount('#chat-area');
     vuePlayers = Vue.createApp(PlayerArea).mount('#player-area');

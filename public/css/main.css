@@ -17,14 +17,59 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-const chatroom = require('./chatroom/chatroom.service.js');
-const chatMessage = require('./chat-message/chat-message.service.js');
-const playerList = require('./player-list/player-list.service.js');
-const label = require('./label/label.service.js');
-// eslint-disable-next-line no-unused-vars
-module.exports = function (app) {
-    app.configure(chatroom);
-    app.configure(chatMessage);
-    app.configure(playerList);
-    app.configure(label);
-};
+
+html {
+    background-color: seagreen;
+    margin: 0 auto;
+    color: white;
+}
+
+h1 {
+    font-size: XL;
+    color: white;
+    text-align: center;
+    text-shadow: 3px 3px 5px grey;
+}
+
+input {
+    margin: 2px;
+}
+
+a {
+    color: gold;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    font-size: 140%;
+}
+
+#messages {
+    background-color: linen;
+    color: black;
+    padding: 2px;
+    height: 100%;
+    align: center;
+}
+
+#lowbar {
+    align: bottom;
+}
+
+#input-area {
+    width: 100%;
+}
+
+.die {
+    border-radius: 50%;
+    font-size: large;
+    width: 40px;
+    height: 40px;
+}
+
+.roll {
+    font-size: 120%;
+    color: maroon;
+    font-weight: bold;
+}

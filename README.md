@@ -3,101 +3,96 @@
 [![Build Status](https://travis-ci.com/muetsii/wod.svg?branch=master)](https://travis-ci.com/muetsii/wod)
 [![codecov](https://codecov.io/gh/muetsii/wod/branch/master/graph/badge.svg)](https://codecov.io/gh/muetsii/wod)
 
-
-
 Chat room to easily roll dice in World of Darkness games, focused on usability.
+
+The point is to reduce the clicks to the minimum just clicking on the button representing the number of dice.
+
+## Reference website
+
+http://dados.asqueados.net
 
 ## Author
 
 Mu (https://github.com/muetsii/)
 
+## Run my instance
 
-## Note
+* clone or download the code
 
-Spanish information bellow is part of a course. Would be moved or removed if this becomes a production app.
+* cd wod
 
-## Diseño de la solución
+* npm install
 
-Opto por la implentación en NodeJS.
+* edit config/default.json to set your sitename and language, and anything else.
 
-Node es una tecnología muy orientada a servir y consumir APIs REST (y otras). Su particular asincronismo monohebra ofrece muy buen rendimiento en peticiones cortas con muchas operaciones de entrada salida, como es servir una petición, consumir una petición o la lectura de la base de datos.
+* npm start
 
-Sobre Node, usaremos el framework FeatherJS. Este framework está orientado a hacer aplicaciones web con comunicación en tiempo real. Justamente uno de sus ejemplos es un chat.
+## Technology
 
-De hecho, ya tenía esta idea de hace un par de años, ha sido al ver el framework de Feathers cuando he pensado que podía abordarlo.
+It is a Node.js application. It uses the feathers framework and socket.io for the chat features, and Vue in the frontend.
 
-## Selección de servicios
+## Colaboration
 
-https://github.com/muetsii/wod/issues/4
+### Help wanted
 
-### Logging
+I am a backend developer. I just learned feathers, socket.io and Vue to do this.
 
-De entre los servicios mencionados me interesa logstash, por ser libre.
+The CSS is horrible and the client is not better, probably needs to be almost completely rewritten.
 
-No obstante, dada la dificultad para encontrar un servicio gratuito para probar, optaría por aislar el detalle usando una librería de logging que aceptase varios servicios, como winston (Javascript).
+I need thus the help mainly from frontend developers and designers (or anyone skilled in CSS).
 
-Dicha biblioteca permite usar diferentes transportes. Uno de ellos es escribir en postgres. Eso es perfecto por ahora porque puedo verificarlo localmente sin tener que levantar ningún servicio, y luego pasar a una plataforma de logging es tan simple como configurar un trasnporte distinto.
+### Monetary rewards
 
-### Configuración remota
+None (I don't get anything too).
 
-Me ha llamado la atención etcd y lo probaré con la intención de aprender.
+### Moral rewards (love)
 
-### Almacenamiento de datos
+* Love for humanity, as this is free software and even AGPL, so it will available for any human beings.
 
-Para las primeras iteraciones no quiero guardar nada de forma permanente. No quiero complicarme con un historial de chats.
+* Love for role-playing, this will enhance gaming experience on certain games.
 
-Para un futuro, sí me gustaría guardar ese historial de chats, para poder usarlo en partidas de foro. Para entonces me plantearía una base de datos relacional, por la sencillez y porque es lo que conozoco. Feathers está adaptado a trabajar con varias BD, aunque no conozco demasiado bien nignuna, así que tendría que informarme de si me convienen, o es mejor currarme la BD fuera del framework.
+* Love for yourself, your name in AUTHORS, and this README.
 
+* Love for your players, the application can be deployed in your own website as long as you respect AGPL.
 
-### Otros
+* Love for your site. If you have a site we can include advertisment for it. Not developed yet and for the moment only for role-playing related sites and non profit.
 
-No parece que vaya a necesitar un gestor de colas como RabbitMQ.
+* Love for coding.
 
-La elección de un servidor web dependerá de la tecnología finalmente seleccionada para la implementación, aunque tampoco será determinante por el momento.
+### Worlds beyond Darkness
 
+The application is designed for World of Darkness games. Currently it only allows rolling D10. But the design is useful for games using dice pools or other kind of simple homogeneous rolls.
 
-## Archivos generados: Actividad 4
+Many games are like this, here a few that come to my mind:
 
-Los siguientes archivos son generados por el scaffolding
+* Shadowrun (pools of D6).
 
-$ feathers generate app
+* MERP (1 button for 1D100).
 
-Entiendo que califican como lo que pide la actividad.
+* CODA (D6 again).
 
-En Node.js no hay ningún layout demasiado estándar, pero en feathers sí, y es éste (de hecho, es lo que me han creado). Me parece un buen layout, aunque no parece muy adecuado para modelo de datos orientado a objetos.
+* The One Ring (pools of D6 plus the Gandalf die).
 
-src
-src/index.js
-src/channels.js
-src/logger.js
-src/services
-src/services/index.js
-src/middleware
-src/middleware/index.js
-src/app.js
-src/app.hooks.js
+* Gunshoe (D6).
 
+* Warhammer 40K (D100 and pools of D10).
 
-# Instrucciones
-(Actividad 8)
+* FUDGE and FATE (fudge dies).
 
-Instalar dependencias
+...
 
-  npm install
+But for this I will need your help (or maybe long time), to implement rooms configurations and several dice systems.
 
-Ejecutar:
+### How to join
 
-  npm start
+I haven't decide a system yet. For now, let me a comment in this issue #74 or find another way.
 
-o bien:
+## What is that babbering language
 
-  npm run run
+If you look at old issues or commit history you can find Spannish content and strange things.
 
-Lanzar los tests:
+This software was started as part of a course by @jj . As exercise I had to add some things that I don't need anymore and I am trying to remove.
 
-  npm run test
+# Version which???
 
-Comprobar cobertura de tests:
-
-  npm run coverage
-
+Yes, the version is too high, also because I had to increase it in every exercise of said course. Version 13 is like 1.
