@@ -4,4 +4,8 @@ action:
   change: 'change'
 info:
   by: 'by'
-
+player:
+  name: 'Name'
+  avatar: 'Avatar'
+room:
+  name: 'Room'
