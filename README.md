@@ -93,3 +93,6 @@ If you look at old issues or commit history you can find Spannish content and st
 
 This software was started as part of a course by @jj . As exercise I had to add some things that I don't need anymore and I am trying to remove.
 
+# Version which???
+
+Yes, the version is too high, also because I had to increase it in every exercise of said course. Version 13 is like 1.
