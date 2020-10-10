@@ -1,4 +1,6 @@
 const { expect } = require('chai');
+const sinon = require('sinon');
+
 const assert = require('assert');
 const app = require('../../src/app');
 
@@ -10,6 +12,36 @@ describe('\'label\' service', () => {
     });
 
     describe('find', () => {
+        it('returns labels', async () => {
+            // Arrange
+            const original = app.get('language');
+            app.set('language', 'en');
+
+            // Act
+            const labels = await app.service('label').find();
+
+            // Assert
+            expect(labels.action.send).to.equal('send');
+
+            // Disarrange
+            app.set('language', original);
+        });
+
+        it('gets spanish translation', async () => {
+            // Arrange
+            const original = app.get('language');
+            app.set('language', 'es');
+
+            // Act
+            const labels = await app.service('label').find();
+
+            // Assert
+            expect(labels.action.send).to.equal('enviar');
+
+            // Disarrange
+            app.set('language', original);
+        });
+
         describe('hook: after', () => {
             it('adds the sitename to the labels', async () => {
                 // Arrange
