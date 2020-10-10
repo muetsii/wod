@@ -1,0 +1,7 @@
+wod: 'World of Diceness'
+action:
+  send: 'enviar'
+  change: 'cambiar'
+info:
+  by: 'por'
+
