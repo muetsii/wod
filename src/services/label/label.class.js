@@ -1,8 +1,5 @@
-// TODO: read from configuration
-const LABELS = {
-    wod: 'World of Diceness',
-    send: 'send!',
-};
+const fs = require('fs');
+const yaml = require('yaml');
 
 /* eslint-disable no-unused-vars */
 class Label {
@@ -10,8 +7,16 @@ class Label {
         this.options = options || {};
     }
 
-    async find (params) {
-        return LABELS;
+    readLabels(language) {
+        if (!this.labels) {
+            this.labels = yaml.parse(
+                fs.readFileSync(`locale/${language}.yml`, 'utf8')
+            );
+        }
+    }
+
+    async find () {
+        return this.labels;
     }
 }
 

@@ -1,6 +1,7 @@
 html {
     background-color: seagreen;
     margin: 0 auto;
+    color: white;
 }
 
 h1 {
@@ -8,6 +9,10 @@ h1 {
     color: white;
     text-align: center;
     text-shadow: 3px 3px 5px grey;
+}
+
+input {
+    margin: 2px;
 }
 
 a {
@@ -22,6 +27,7 @@ a:hover {
 
 #messages {
     background-color: linen;
+    color: black;
     padding: 2px;
     height: 100%;
     align: center;

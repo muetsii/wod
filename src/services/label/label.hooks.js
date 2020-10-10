@@ -6,10 +6,16 @@ function addConfigurationLabels(context) {
     }
 }
 
+function readLabels(context) {
+    context.service.readLabels(
+        context.app.get('language')
+    );
+}
+
 module.exports = {
     before: {
         all: [],
-        find: [],
+        find: [readLabels],
         get: [],
         create: [],
         update: [],

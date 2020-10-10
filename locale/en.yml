@@ -1,0 +1,11 @@
+wod: 'World of Diceness'
+action:
+  send: 'send'
+  change: 'change'
+info:
+  by: 'by'
+player:
+  name: 'Name'
+  avatar: 'Avatar'
+room:
+  name: 'Room'
