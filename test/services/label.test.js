@@ -12,10 +12,17 @@ describe('\'label\' service', () => {
     });
 
     describe('find', () => {
+        beforeEach(() => {
+            app.service('label').labels = undefined;
+        });
+
+        afterEach(() => {
+            sinon.restore();
+        });
+
         it('returns labels', async () => {
             // Arrange
-            const original = app.get('language');
-            app.set('language', 'en');
+            sinon.stub(app, 'get').returns('en');
 
             // Act
             const labels = await app.service('label').find();
@@ -24,13 +31,13 @@ describe('\'label\' service', () => {
             expect(labels.action.send).to.equal('send');
 
             // Disarrange
-            app.set('language', original);
+            sinon.restore();
         });
 
         it('gets spanish translation', async () => {
             // Arrange
-            const original = app.get('language');
-            app.set('language', 'es');
+            sinon.stub(app, 'get').returns('es');
+            console.log(app.service('label').labels);
 
             // Act
             const labels = await app.service('label').find();
@@ -39,7 +46,7 @@ describe('\'label\' service', () => {
             expect(labels.action.send).to.equal('enviar');
 
             // Disarrange
-            app.set('language', original);
+            sinon.restore();
         });
 
         describe('hook: after', () => {
