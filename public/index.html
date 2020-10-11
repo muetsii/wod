@@ -34,7 +34,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     <title id="title">{{ roomName }} : {{ sitename }}</title>
   </head>
   <body>
-    <div id="main-menu-bar"><h1>{{ sitename }} : {{ roomName }}</h1></div>
+    <div id="main-menu-bar">
+      <h1>{{ sitename }}</h1>
+      <h2>{{ roomName }}</h2>
+    </div>
     <div id="main-app">
       <div id="lobby">
         {{ labelPlayerName }}<input type="text" id="playername" v-model="playerName"></input>
