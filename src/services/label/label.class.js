@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 const fs = require('fs');
 const yaml = require('yaml');
+const _ = require('lodash');
 
 /* eslint-disable no-unused-vars */
 class Label {
@@ -28,8 +29,10 @@ class Label {
 
     readLabels(language) {
         if (!this.labels) {
-            this.labels = yaml.parse(
-                fs.readFileSync(`locale/${language}.yml`, 'utf8')
+            this.labels = _.merge(
+                {},
+                yaml.parse(fs.readFileSync(`locale/en.yml`, 'utf8')),
+                yaml.parse(fs.readFileSync(`locale/${language}.yml`, 'utf8')),
             );
         }
     }

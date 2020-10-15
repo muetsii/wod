@@ -4,6 +4,7 @@ action:
   change: 'change'
 info:
   by: 'by'
+  DONOTTRANSLATE: 'XaaX'
 player:
   name: 'Name'
   avatar: 'Avatar'

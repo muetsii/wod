@@ -68,6 +68,22 @@ describe('\'label\' service', () => {
             sinon.restore();
         });
 
+
+        it('not present labels are taken from English', async () => {
+            // Arrange
+            sinon.stub(app, 'get').returns('es');
+            console.log(app.service('label').labels);
+
+            // Act
+            const labels = await app.service('label').find();
+
+            // Assert
+            expect(labels.info.DONOTTRANSLATE).to.equal('XaaX');
+
+            // Disarrange
+            sinon.restore();
+        });
+
         describe('hook: after', () => {
             it('adds the sitename to the labels', async () => {
                 // Arrange
