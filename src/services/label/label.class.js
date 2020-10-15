@@ -31,7 +31,7 @@ class Label {
         if (!this.labels) {
             this.labels = _.merge(
                 {},
-                yaml.parse(fs.readFileSync(`locale/en.yml`, 'utf8')),
+                yaml.parse(fs.readFileSync('locale/en.yml', 'utf8')),
                 yaml.parse(fs.readFileSync(`locale/${language}.yml`, 'utf8')),
             );
         }
